@@ -19,13 +19,17 @@ data = pandas.read_csv("50_states.csv")
 states = data.state.to_list()
 # print(states)
 num_states = len(states)
+states_left = []
 while game_on:
 
   # Check if the user answer is in the list of the states
+  if user_answer == "Exit":
+    break
   if user_answer in states:
     user_correct_answer += 1
     if user_correct_answer == 50:
       game_on = False
+    states_left.append(user_answer)
     states.remove(user_answer)
     # print("There is")
     # Print in the coords
@@ -45,4 +49,7 @@ while game_on:
 
   user_answer = screen.textinput(f"{user_correct_answer} / {num_states}", "Enter the satate").title()
 
+states_csv = {'states': states}
+df = pandas.DataFrame(states_csv)
+df.to_csv('States_left.csv')
 screen.exitonclick()
